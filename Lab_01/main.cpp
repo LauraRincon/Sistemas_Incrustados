@@ -16,14 +16,14 @@
 int main(void) {
 
     WDTCTL = WDTPW | WDTHOLD;   /** Stop watchdog timer **/
-    Power_up(SYSTEM_WATTS);                 /** Power-up **/
+    PowerUp(SYSTEM_WATTS);                 /** Power-up **/
 
     while (1) {
 
         //--------- Verify Rooms light level ---------
         g_fSensorLux = OPT3001_getLux();
 
-        if(g_fSensorLux > LightThreshold){
+        if(g_fSensorLux > LIGHT_THRESHOLD){
             //if there is light (day light/external lamp on)
             g_u8Flags &= ~BIT2; // CLEAR Under Light Threshold Flag
         }
@@ -44,14 +44,14 @@ int main(void) {
                 if( (g_u8Flags & BIT3) == BIT3){
 
                     //LED_CTRL->OUT = BIT1;
-                    LED_CTRL->OUT = g_LED_LIGHT; //Turn LED on
-                    g_iLampOnCount = LampOnInterval;
+                    LED_CTRL->OUT = g_iLedLight; //Turn LED on
+                    g_iLampOnCount = LAMP_ON_INTERVAL;
                 }
             }
             else{
                 // if lamp is not activated by button and Under Light Threshold Flag is false
                 //LED_CTRL->OUT &= ~BIT1;
-                LED_CTRL->OUT &= ~g_LED_LIGHT; //Turn LED off
+                LED_CTRL->OUT &= ~g_iLedLight; //Turn LED off
             }
         }
     }

@@ -15,7 +15,7 @@
 #ifndef INTERRUPTIONS_HANDLER_HPP_
 #define INTERRUPTIONS_HANDLER_HPP_
 
-#define LampOnInterval 5
+#define LAMP_ON_INTERVAL 5
 
 uint8_t g_u8OverThSampleCount;
 

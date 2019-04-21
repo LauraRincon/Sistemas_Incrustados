@@ -80,8 +80,7 @@ extern "C" {
             g_iLampOnCount --;
         }
         else if ( (g_iLampOnCount == 0) ) {
-            //LED_CTRL->OUT &= ~BIT2; //APAGAR LED azul
-            LED_CTRL->OUT &= ~g_LED_LIGHT; //APAGAR LED azul
+            LED_CTRL->OUT &= ~g_iLedLight; //Turn off light
             g_u8Flags &= ~BIT1;
         }
 
@@ -123,11 +122,11 @@ extern "C" {
         if ( l_u32GpioStatus & GPIO_PIN1 ) {
 
             // Toggle the state of light
-            GPIO_toggleOutputOnPin( GPIO_PORT_P2 , g_LED_LIGHT ) ;
+            GPIO_toggleOutputOnPin( GPIO_PORT_P2 , g_iLedLight ) ;
 
             if(P2->OUT != 0){
                 g_u8Flags |= BIT1;
-                g_iLampOnCount = LampOnInterval;}
+                g_iLampOnCount = LAMP_ON_INTERVAL;}
 
             GPIO_clearInterruptFlag( GPIO_PORT_P1 , l_u32GpioStatus ) ;
         }

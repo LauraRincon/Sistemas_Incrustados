@@ -11,12 +11,11 @@
  */
 
 //*****************************************************************
-void Pin_setup(void){
+void PinSetup(void){
 
-    P2->DIR |= BIT0; //P2 Red LED
-    P2->DIR |= BIT1; //P2 Green LED- 0x00000010 port P2.1 as an output
-    P2->DIR |= BIT2; //P2 Blue LED - 0x00000100 port P2.2 as an output
+    P2->DIR |=  g_iLedLight;
 
+    //Debbugin led (erase)
     P1->DIR |= BIT0; //P1 Red LED - 0x00000001 port P1.0 as an output
 
     // Set P4.3 for Analog input, disabling the I/O circuit.
@@ -72,7 +71,7 @@ void ADC_setup(void){
     return;
 }
 //*****************************************************************
-void LightSensor_setup(void){
+void LightSensorSetup(void){
 
     /* Initialize I2C communication */
     Init_I2C_GPIO();
@@ -86,7 +85,7 @@ void LightSensor_setup(void){
     return;
 }
 //*****************************************************************
-void Button_setup(void){
+void ButtonSetup(void){
 
     // Configure Green and Blue LED
     GPIO_setAsOutputPin( GPIO_PORT_P2 , GPIO_PIN1 ) ;
@@ -115,7 +114,7 @@ void Button_setup(void){
     //MAP_Interrupt_setPriority(INT_PORT1,2);
 }
 //*****************************************************************
-void InitialConditions_setup(void){
+void InitialConditionsSetup(void){
     // LEDS off
     P1->OUT &= ~BIT0; //Red LED off
     P2->OUT &= ~BIT0; //Red LED off
@@ -138,49 +137,50 @@ void InitialConditions_setup(void){
 }
 //*****************************************************************
 
-void Initial_blink(int i_BLINK_TIMES, int i_SystemWatts) {
+void InitialBlink(int i_iBlinkTimes) {
 
-        switch(i_SystemWatts){
-            case 5:{
-                g_LED_LIGHT = BLUE_LED;
-                break; }
-            case 10:{
-                g_LED_LIGHT = RED_LED;
-                break; }
-            case 15:{
-                g_LED_LIGHT = BLUE_LED | RED_LED;
-                break; }
-            default:{
-                g_LED_LIGHT = BLUE_LED | RED_LED | GREEN_LED;
-                break;}
-        }
+    LED_CTRL->DIR |= g_iLedLight;
+    LED_CTRL->OUT |= g_iLedLight;
 
-    LED_CTRL->DIR |= g_LED_LIGHT;
-    LED_CTRL->OUT |= g_LED_LIGHT;
-
-    for(int i = 0; i < 2*i_BLINK_TIMES; i++ ) {
+    for(int i = 0; i < 2*i_iBlinkTimes; i++ ) {
         __delay_cycles(BLINK_DELAY);
-        LED_CTRL->OUT ^= g_LED_LIGHT;
+        LED_CTRL->OUT ^= g_iLedLight;
     };
-    LED_CTRL->OUT ^= g_LED_LIGHT;
+    LED_CTRL->OUT ^= g_iLedLight;
     return;
 }
 //*****************************************************************
-void Power_up(int i_SystemWatts){
+void PowerUp(int i_iSystemWatts){
+
+    switch(i_iSystemWatts){
+        case 5:{
+            g_iLedLight = BLUE_LED;
+            break; }
+        case 10:{
+            g_iLedLight = RED_LED;
+            break; }
+        case 15:{
+            g_iLedLight = BLUE_LED | RED_LED;
+            break; }
+        default:{
+            g_iLedLight = BLUE_LED | RED_LED | GREEN_LED;
+            break;}
+    }
+
     //Setup
-    Pin_setup();
+    PinSetup();
 
 
     //Initial Conditions
-    InitialConditions_setup();
+    InitialConditionsSetup();
 
     // Initial blink
-    Initial_blink(3, i_SystemWatts);
+    InitialBlink(3);
 
     //Interrupt Setup
     T32_1_setup();
-    LightSensor_setup();
-    Button_setup();
+    LightSensorSetup();
+    ButtonSetup();
     T32_2_setup();
     ADC_setup();
 

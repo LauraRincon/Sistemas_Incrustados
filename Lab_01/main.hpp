@@ -28,16 +28,9 @@
 
 #define LED_CTRL P2
 #define SYSTEM_WATTS 20
-
-
-#define LightThreshold 30
-
-#define TurnOnLampMask 0x0F
-#define TurnOffLampMask 0x06
+#define LIGHT_THRESHOLD 30
 
 uint8_t g_u8Flags;
-
-
 int g_iLampOnCount;
 float g_fSensorLux;
 
