@@ -22,6 +22,7 @@
 #define GREEN_LED 0x02
 #define RED_LED 0x01
 
+// Global variable that indicates pins on the port used by the LED Light
 int g_iLedLight;
 
 void PinSetup(void);

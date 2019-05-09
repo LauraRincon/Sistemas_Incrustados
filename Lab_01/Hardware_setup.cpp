@@ -8,15 +8,14 @@
  *      IE-1119 Temas Especiales II: Laboratorio de Introducción a los Sistemas Incrustados
  *
  *      Authors: Dunia, Laura, Sebastian
+ *      The functions discribed in this file set the peripherals up for the main program and the interuptions handler. 
  */
 
-//*****************************************************************
+//----------------------------------------------------------------
 void PinSetup(void){
 
+    // Set the pins that are going to be used by LED light.
     P2->DIR |=  g_iLedLight;
-
-    //Debbugin led (erase)
-    P1->DIR |= BIT0; //P1 Red LED - 0x00000001 port P1.0 as an output
 
     // Set P4.3 for Analog input, disabling the I/O circuit.
     P4->SEL0 = BIT3;
@@ -25,7 +24,9 @@ void PinSetup(void){
 
     return;
 }
-//*****************************************************************
+//----------------------------------------------------------------
+
+// Makes a 10ms periodic interruption 
 void T32_1_setup(void){
 
     TIMER32_1->LOAD |= TIMER32_1_COUNT_10ms;
@@ -37,7 +38,9 @@ void T32_1_setup(void){
 
     return;
 }
-//*****************************************************************
+//----------------------------------------------------------------
+
+// Makes a 1s periodic interruption
 void T32_2_setup(void){
 
     TIMER32_2->LOAD |= TIMER32_2_COUNT_1s;
@@ -49,7 +52,9 @@ void T32_2_setup(void){
 
     return;
 }
-//*****************************************************************
+//----------------------------------------------------------------
+
+// Set the ADC14 to get an aundio sample
 void ADC_setup(void){
 
     //ADC14 Control_0
@@ -70,7 +75,12 @@ void ADC_setup(void){
 
     return;
 }
-//*****************************************************************
+//----------------------------------------------------------------
+
+/* Set the I2C conection between the MSP432P401R and the BoosterPack's 
+ * light sensor.
+ */
+
 void LightSensorSetup(void){
 
     /* Initialize I2C communication */
@@ -85,6 +95,8 @@ void LightSensorSetup(void){
     return;
 }
 //*****************************************************************
+
+// Set the button that will be used to turn on/off manually the device's light. 
 void ButtonSetup(void){
 
     // Configure Green and Blue LED
@@ -111,12 +123,15 @@ void ButtonSetup(void){
     GPIO_setOutputLowOnPin( GPIO_PORT_P2 , GPIO_PIN1 ) ;
     GPIO_setOutputLowOnPin( GPIO_PORT_P2 , GPIO_PIN2 ) ;
 
-    //MAP_Interrupt_setPriority(INT_PORT1,2);
 }
 //*****************************************************************
+
+/* Set the global variable's initial conditions to 0 and the turn 
+ * off all the LED lights.
+ */
+
 void InitialConditionsSetup(void){
     // LEDS off
-    P1->OUT &= ~BIT0; //Red LED off
     P2->OUT &= ~BIT0; //Red LED off
     P2->OUT &= ~BIT1; //Green LED off
     P2->OUT &= ~BIT2; //Blue LED off
@@ -137,19 +152,24 @@ void InitialConditionsSetup(void){
 }
 //*****************************************************************
 
+// Device's turn on confirmation
 void InitialBlink(int i_iBlinkTimes) {
 
     LED_CTRL->DIR |= g_iLedLight;
     LED_CTRL->OUT |= g_iLedLight;
 
-    for(int i = 0; i < 2*i_iBlinkTimes; i++ ) {
+    for(int i = 0; i < 2*i_iBlinkTimes -1; i++ ) {
         __delay_cycles(BLINK_DELAY);
         LED_CTRL->OUT ^= g_iLedLight;
     };
-    LED_CTRL->OUT ^= g_iLedLight;
     return;
 }
 //*****************************************************************
+
+/* Check the device's operational power consumption and makes several 
+ * calls to set the used hardware.
+ */
+
 void PowerUp(int i_iSystemWatts){
 
     switch(i_iSystemWatts){
@@ -187,11 +207,9 @@ void PowerUp(int i_iSystemWatts){
 
     // Define light state
     g_fSensorLux = OPT3001_getLux();
-    //printf("Inicial:\nLuz %f \t Audio %u \n", g_fSensorLux, g_iAudioThreshold);
 
     // Set Power-on Flag
     g_u8Flags |= BIT0;
-    //printf("%u\n", (g_u8Flags & BIT0));
 
     return;
 }

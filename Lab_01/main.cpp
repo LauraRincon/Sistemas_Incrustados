@@ -42,15 +42,11 @@ int main(void) {
         if( (g_u8Flags & BIT1) == 0U){
             if( (g_u8Flags & BIT2) == BIT2){
                 if( (g_u8Flags & BIT3) == BIT3){
-
-                    //LED_CTRL->OUT = BIT1;
                     LED_CTRL->OUT = g_iLedLight; //Turn LED on
                     g_iLampOnCount = LAMP_ON_INTERVAL;
                 }
             }
             else{
-                // if lamp is not activated by button and Under Light Threshold Flag is false
-                //LED_CTRL->OUT &= ~BIT1;
                 LED_CTRL->OUT &= ~g_iLedLight; //Turn LED off
             }
         }

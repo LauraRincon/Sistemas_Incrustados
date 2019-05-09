@@ -2,7 +2,7 @@
 # Automatically-generated file. Do not edit!
 ################################################################################
 
-CG_TOOL_ROOT := /home/laura/ti/ccs901/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS
+CG_TOOL_ROOT := /home/sebastianblari/ti/ccs900/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS
 
 GEN_OPTS__FLAG := 
 GEN_CMDS__FLAG := 
@@ -17,7 +17,7 @@ ORDERED_OBJS += \
 "./system_msp432p401r.obj" \
 "../msp432p401r.cmd" \
 $(GEN_CMDS__FLAG) \
--l"/home/laura/ti/simplelink_msp432p4_sdk_3_10_00_08/source/ti/grlib/lib/ccs/m4f/grlib.a" \
+-l"/home/sebastianblari/ti/simplelink_msp432p4_sdk_3_10_00_08/source/ti/grlib/lib/ccs/m4f/grlib.a" \
 -l"ti/display/lib/display.aem4f" \
 -l"ti/grlib/lib/ccs/m4f/grlib.a" \
 -l"third_party/spiffs/lib/ccs/m4f/spiffs.a" \
@@ -151,14 +151,14 @@ all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 Lab_01_v3.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: ARM Linker'
-	"/home/laura/ti/ccs901/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --preinclude="/home/laura/workspace_v9/Lab_01_v3/main.hpp" --define=__MSP432P401R__ --define=DeviceFamily_MSP432P401x -g --rtti --cpp_default --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"Lab_01_v3.map" --stack_size=512 -i"/home/laura/ti/simplelink_msp432p4_sdk_3_10_00_08/source" -i"/home/laura/ti/ccs901/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Lab_01_v3_linkInfo.xml" --rom_model -o "Lab_01_v3.out" $(ORDERED_OBJS)
+	"/home/sebastianblari/ti/ccs900/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/bin/armcl" -mv7M4 --code_state=16 --float_support=FPv4SPD16 -me --preinclude="/home/sebastianblari/Downloads/Lab_01_v3/main.hpp" --define=__MSP432P401R__ --define=DeviceFamily_MSP432P401x -g --rtti --cpp_default --diag_warning=225 --diag_warning=255 --diag_wrap=off --display_error_number --gen_func_subsections=on -z -m"Lab_01_v3.map" --stack_size=512 -i"/home/sebastianblari/ti/simplelink_msp432p4_sdk_3_10_00_08/source" -i"/home/sebastianblari/ti/ccs900/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/lib" --diag_wrap=off --display_error_number --warn_sections --xml_link_info="Lab_01_v3_linkInfo.xml" --rom_model -o "Lab_01_v3.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
 Lab_01_v3.hex: $(EXE_OUTPUTS)
 	@echo 'Building files: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo 'Invoking: ARM Hex Utility'
-	"/home/laura/ti/ccs901/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/bin/armhex"  -o "Lab_01_v3.hex" $(EXE_OUTPUTS__QUOTED)
+	"/home/sebastianblari/ti/ccs900/ccs/tools/compiler/ti-cgt-arm_18.12.1.LTS/bin/armhex"  -o "Lab_01_v3.hex" $(EXE_OUTPUTS__QUOTED)
 	@echo 'Finished building: $(strip $(EXE_OUTPUTS__QUOTED))'
 	@echo ' '
 

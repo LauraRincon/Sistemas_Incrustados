@@ -27,7 +27,7 @@
 #define MAIN_HPP_
 
 #define LED_CTRL P2
-#define SYSTEM_WATTS 20
+#define SYSTEM_WATTS 15
 #define LIGHT_THRESHOLD 30
 
 uint8_t g_u8Flags;

@@ -19,13 +19,13 @@
 
 uint8_t g_u8OverThSampleCount;
 
-uint16_t g_u16Adc14Result[6];   //Storage last 5s audio samples
-uint16_t g_u16AudioAverage_5s;  //Storage last 5s average audio
-uint16_t g_u16AudioAverage_1s;
-uint32_t g_u32AudioSampleSum;
+uint16_t g_u16Adc14Result[6];   //Stores last 5s audio samples
+uint16_t g_u16AudioAverage_5s;  //Stores last 5s average audio
+uint16_t g_u16AudioAverage_1s;  //Stores last 1s average audio
+uint32_t g_u32AudioSampleSum;   //Stores the total amount of audio sample's value in 1s
 
-int g_iAudioThreshold;
-int g_iAudioSampleCount;
+int g_iAudioThreshold;          //Stores the audio threshold that indicates when there is a crying
+int g_iAudioSampleCount;        //Stores the amount of samples in 1s
 
 
 
